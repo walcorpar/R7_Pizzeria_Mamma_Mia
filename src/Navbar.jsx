@@ -1,51 +1,49 @@
-import { Link } from "react-router-dom";
 import { useContext } from "react";
-import { CartContext } from "./pages/CartContext.jsx";
+import { Link } from "react-router-dom";
+import { UserContext } from "./context/UserContext.jsx";
 
-export default function Navbar() { // <-- Ya no recibimos setVista
-  const { total } = useContext(CartContext);
-  const token = false;
+const Navbar = () => {
+  // Extraemos el token y el método logout del contexto
+  const { token, logout } = useContext(UserContext);
+  const total = 25000; // Esto vendrá de tu CartContext más adelante
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark w-100">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container">
-        
-        {/* 1. El Logo ahora es un Link limpio a la raíz */}
-        <Link to="/" className="navbar-brand">
-          🍕 Pizzería Mamma Mia!
-        </Link>
-        
+        <Link className="navbar-brand" to="/">Pizzería Mamma Mía</Link>
         <div className="navbar-nav me-auto">
-          {/* 2. Enlace al Home */}
-          <Link to="/" className="btn btn-sm btn-outline-light me-2">Home</Link>
-          
+          {/* Botón Home: Siempre visible */}
+          <Link className="btn btn-outline-white text-white ms-2" to="/">🍕 Home</Link>
+
           {token ? (
             <>
-              {/* 3. Enlace al Profile */}
-              <Link to="/profile" className="btn btn-sm btn-outline-light me-2">
-                Profile
-              </Link>
-              <button className="btn btn-sm btn-outline-light me-2">
-                Logout
+              {/* Botones visibles solo con token: true */}
+              <Link className="btn btn-outline-white text-white ms-2" to="/profile">🔓 Profile</Link>
+              <button 
+                className="btn btn-outline-white text-white ms-2" 
+                onClick={logout} 
+              >
+                🔒 Logout
               </button>
             </>
           ) : (
             <>
-              {/* 4. Rutas lógicas puras, no archivos físicos */}
-              <Link to="/login" className="btn btn-sm btn-outline-light me-2">Login</Link>
-              <Link to="/register" className="btn btn-sm btn-outline-light me-2">Register</Link>
+              {/* Botones visibles solo con token: false */}
+              <Link className="btn btn-outline-white text-white ms-2" to="/login">🔐 Login</Link>
+              <Link className="btn btn-outline-white text-white ms-2" to="/register">🔐 Register</Link>
             </>
           )}
         </div>
-        
-        <div className="navbar-nav ms-auto">
-          {/* 5. El botón del carrito ahora es un Link a /cart */}
-          <Link to="/cart" className="btn btn-outline-info">
-            🛒 Total: ${total.toLocaleString("es-CL")}
+
+        <div className="navbar-nav">
+          {/* Botón Total: Siempre visible */}
+          <Link className="btn btn-outline-info text-info" to="/cart">
+            🛒 Total: ${total.toLocaleString()}
           </Link>
         </div>
-        
       </div>
     </nav>
   );
-}
+};
+
+export default Navbar;
