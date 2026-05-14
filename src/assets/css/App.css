@@ -1,0 +1,19 @@
+.layout-grid {
+  display: grid;
+  grid-template-areas:
+    "navbar"
+    "home"
+    "footer";
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
+}
+
+/* Asignamos las áreas a los componentes */
+.navbar { grid-area: navbar; }
+.home-container { grid-area: home; }
+footer { grid-area: footer; }
+
+.logo-banner {
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
+            url('./') no-repeat center center;
+}
