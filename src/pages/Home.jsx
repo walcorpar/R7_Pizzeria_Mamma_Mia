@@ -2,8 +2,8 @@
 import { useState, useEffect } from "react";
 import Header from "../Header.jsx";
 import CardPizza from "../CardPizza.jsx";
-import { pizzas } from "../assets/js/pizzas.js"
-import Pizzas from './Pizza.jsx';
+import { pizzas } from "../assets/js/pizzas.js"; // 2. Importamos el array de pizzas reales
+import Pizzas from '../pages/Pizza.jsx'; // 2. Importamos el componente que muestra las pizzas
 
 export default function Home() {
   const [pizzas, setPizzas] = useState([]); // 1. Estado inicial vacío

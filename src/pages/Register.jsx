@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+// Ajusta la ruta si es necesario para importar correctamente tu UserContext
+import { UserContext } from "../context/UserContext"; 
 
 const RegisterPage = () => {
   // 1. Estados para los inputs
@@ -6,8 +8,11 @@ const RegisterPage = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  // 2. Función para validar el formulario
-  const validarDatos = (e) => {
+  // 2. Consumir el método register desde el UserContext
+  const { register } = useContext(UserContext);
+
+  // 3. Función para validar el formulario y conectar al backend
+  const validarDatos = async (e) => {
     e.preventDefault(); // Evita que la página se recargue
 
     if (!email || !password || !confirmPassword) {
@@ -23,27 +28,42 @@ const RegisterPage = () => {
       return;
     }
 
-    alert("Registro exitoso!");
+    // REQ 4: Ejecutar el método del contexto con los datos reales [cite: 63]
+    await register(email, password);
   };
 
   return (
     <form className="container mt-5" onSubmit={validarDatos}>
       <div className="form-group mb-3">
         <label>Email</label>
-        <input type="email" className="form-control" onChange={(e) => setEmail(e.target.value)} value={email}/>
+        <input 
+          type="email" 
+          className="form-control" 
+          onChange={(e) => setEmail(e.target.value)} 
+          value={email}
+        />
       </div>
       
       <div className="form-group mb-3">
         <label>Password</label>
-        <input type="password" className="form-control" onChange={(e) => setPassword(e.target.value)} value={password}/>
+        <input 
+          type="password" 
+          className="form-control" 
+          onChange={(e) => setPassword(e.target.value)} 
+          value={password}
+        />
       </div>
 
       <div className="form-group mb-3">
         <label>Confirmar Password</label>
-        <input type="password" className="form-control" onChange={(e) => setConfirmPassword(e.target.value)} value={confirmPassword}/>
+        <input 
+          type="password" 
+          className="form-control" 
+          onChange={(e) => setConfirmPassword(e.target.value)} 
+          value={confirmPassword}
+        />
       </div>
 
-      
       <button type="submit" className="btn btn-primary">Enviar</button>
     </form>
   );
